@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangdiary.api.dao.CustomerCenterDAO">
+  <insert id="inquiry" parameterType="com.dangdiary.api.domain.customerCenter.dto.InquiryDTO">
+    INSERT INTO inquiries(user_id, register_date, type, title, content, progress)
+    VALUES
+      (#{userId}, NOW(), #{type}, #{title}, #{content}, '접수 완료')
+  </insert>
+
+  <select id="getInquiryHistoryDTOList" parameterType="int" resultType="com.dangdiary.api.domain.customerCenter.dto.InquiryHistoryDTO">
+    SELECT inquiry_id inquiryId, register_date registerDate, type type, title title, content content, progress progress, answer answer, answer_date answerDate, is_like isLike
+    FROM inquiries
+    WHERE user_id = #{userId}
+    ORDER BY registerDate;
+  </select>
+</mapper>
